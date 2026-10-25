@@ -41,3 +41,18 @@ Struktur data **Queue** adalah kumpulan elemen terurut di mana penambahan elemen
 Pastikan Dart SDK sudah terpasang. Cek via terminal:
 ```bash
 dart --version
+Menjalankan Program
+Buka terminal pada folder proyek.
+
+Jalankan perintah:
+
+Bash
+dart run queue.dart
+Output Program
+Plaintext
+10 berhasil ditambahkan ke antrian
+20 berhasil ditambahkan ke antrian
+30 berhasil ditambahkan ke antrian
+Isi antrian: [10, 20, 30]
+10 dihapus dari antrian
+Isi antrian: [20, 30]

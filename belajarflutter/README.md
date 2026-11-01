@@ -19,6 +19,11 @@ Implementasi tugas dan latihan praktikum Modul 2 Pemrograman Mobile menggunakan 
 4. **Form Produk & Detail (`lib/ui/produk_form.dart` & `lib/ui/produk_detail.dart`)**: Input data produk (`TextField`), `StatefulWidget`, serta perpindahan halaman dan pengiriman data menggunakan `Navigator.push`.
 5. **List Data Produk (`lib/ui/produk_page.dart`)**: Menampilkan daftar item menggunakan `ListView`, `Card`, dan `ListTile`.
 
+### Display Aplikasi
+<p align="center">
+  <img src="screenshot/list_data_produk.png" width="280" alt="List Data Produk">
+</p>
+
 ---
 
 ## Cara Menjalankan

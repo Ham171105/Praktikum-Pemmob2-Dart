@@ -11,6 +11,15 @@ Repository ini berisi kumpulan tugas dan latihan praktikum Modul 2 mata kuliah P
 
 ---
 
+## Preview Aplikasi
+<p align="center">
+  <img src="belajarflutter/screenshot/list_data_produk.png" width="280" alt="Display Aplikasi Flutter">
+  <br>
+  <em>Tampilan Hasil Praktikum Flutter (List Data Produk)</em>
+</p>
+
+---
+
 ## Daftar Isi
 1. [Bagian 1: Implementasi Struktur Data Queue (Dart)](#bagian-1-implementasi-struktur-data-queue-dart)
 2. [Bagian 2: Implementasi Flutter (belajarflutter/)](#bagian-2-implementasi-flutter-belajarflutter)

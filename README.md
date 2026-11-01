@@ -84,11 +84,6 @@ Implementasi tugas dan latihan praktikum Modul 2 Pemrograman Mobile menggunakan 
 5. **List Data Produk (`belajarflutter/lib/ui/produk_page.dart`)**:
    * Menampilkan daftar item produk dalam bentuk list menggunakan `ListView`, `Card`, dan `ListTile`.
 
-### Display Aplikasi
-<p align="center">
-  <img src="belajarflutter/screenshot/list_data_produk.png" width="280" alt="List Data Produk">
-</p>
-
 ### Cara Menjalankan Aplikasi Flutter:
 1. Masuk ke direktori proyek Flutter:
    ```bash

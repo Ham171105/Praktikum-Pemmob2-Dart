@@ -18,20 +18,9 @@ Repository ini berisi kumpulan tugas dan latihan praktikum mata kuliah Pemrogram
   <img src="belajarflutter/screenshot/list_data_produk.png" width="280" alt="List Data Produk" />
 </p>
 
-### 2. Video Demo Routing & Session (`router_flutter`)
-
-https://github.com/Ham171105/Praktikum-Pemmob2-Dart/raw/main/router_flutter/demo/demo.mp4
-
-> 🎬 **[Klik di sini untuk memutar Video Demo router_flutter](https://github.com/Ham171105/Praktikum-Pemmob2-Dart/blob/main/router_flutter/demo/demo.mp4)**
 
 ---
 
-## Daftar Isi
-1. [Bagian 1: Implementasi Struktur Data Queue (Dart)](#bagian-1-implementasi-struktur-data-queue-dart)
-2. [Bagian 2: Implementasi Dasar Flutter (`belajarflutter/`)](#bagian-2-implementasi-dasar-flutter-belajarflutter)
-3. [Bagian 3: Implementasi Routing, Sidemenu, & Shared Preferences (`router_flutter/`)](#bagian-3-implementasi-routing-sidemenu--shared-preferences-router_flutter)
-
----
 
 ## Bagian 1: Implementasi Struktur Data Queue (Dart)
 

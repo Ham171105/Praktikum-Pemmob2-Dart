@@ -126,7 +126,7 @@ Implementasi tugas praktikum Pemrograman Mobile yang mencakup pengelolaan rute n
    * Widget `Drawer` yang menghubungkan halaman Home dan About menggunakan `Navigator.push` dan `MaterialPageRoute`.
 
 ### Video Demonstrasi
-https://github.com/Ham171105/Praktikum-Pemmob2-Dart/raw/main/router_flutter/demo/demo.mp4
+https://github.com/user-attachments/assets/edc75c85-87eb-4a9c-b0dc-b2914beb90a9
 
 🎬 **[Putar Video Demo (demo.mp4)](https://github.com/Ham171105/Praktikum-Pemmob2-Dart/blob/main/router_flutter/demo/demo.mp4)**
 

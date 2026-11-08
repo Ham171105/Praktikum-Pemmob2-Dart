@@ -1,6 +1,6 @@
-# Tugas Praktikum Pemrograman Mobile - Modul 2
+# Tugas Praktikum Pemrograman Mobile
 
-Repository ini berisi kumpulan tugas dan latihan praktikum Modul 2 mata kuliah Pemrograman Mobile menggunakan bahasa pemrograman **Dart** dan framework **Flutter**.
+Repository ini berisi kumpulan tugas dan latihan praktikum mata kuliah Pemrograman Mobile menggunakan bahasa pemrograman **Dart** dan framework **Flutter**.
 
 ---
 
@@ -13,16 +13,20 @@ Repository ini berisi kumpulan tugas dan latihan praktikum Modul 2 mata kuliah P
 
 ## Preview Aplikasi
 <p align="center">
-  <img src="belajarflutter/screenshot/list_data_produk.png" width="280" alt="Display Aplikasi Flutter">
-  <br>
-  <em>Tampilan Hasil Praktikum Flutter (List Data Produk)</em>
+  <img src="belajarflutter/screenshot/list_data_produk.png" width="260" alt="List Data Produk" />
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="router_flutter/screenshot/login_page.png" width="260" alt="Login Page" />
+</p>
+<p align="center">
+  <em>Kiri: Praktikum Dasar Flutter (belajarflutter) &nbsp;|&nbsp; Kanan: Praktikum Routing & Session (router_flutter)</em>
 </p>
 
 ---
 
 ## Daftar Isi
 1. [Bagian 1: Implementasi Struktur Data Queue (Dart)](#bagian-1-implementasi-struktur-data-queue-dart)
-2. [Bagian 2: Implementasi Flutter (belajarflutter/)](#bagian-2-implementasi-flutter-belajarflutter)
+2. [Bagian 2: Implementasi Dasar Flutter (`belajarflutter/`)](#bagian-2-implementasi-dasar-flutter-belajarflutter)
+3. [Bagian 3: Implementasi Routing, Sidemenu, & Shared Preferences (`router_flutter/`)](#bagian-3-implementasi-routing-sidemenu--shared-preferences-router_flutter)
 
 ---
 
@@ -67,9 +71,9 @@ Isi antrian: [20, 30]
 
 ---
 
-## Bagian 2: Implementasi Flutter (`belajarflutter/`)
+## Bagian 2: Implementasi Dasar Flutter (`belajarflutter/`)
 
-Implementasi tugas dan latihan praktikum Modul 2 Pemrograman Mobile menggunakan framework Flutter yang berada di dalam folder `belajarflutter/`.
+Implementasi tugas dan latihan praktikum Pemrograman Mobile menggunakan framework Flutter yang berada di dalam folder `belajarflutter/`.
 
 ### Latihan yang Diimplementasikan:
 1. **Hello World (`belajarflutter/lib/hello_world.dart`)**:
@@ -94,6 +98,44 @@ Implementasi tugas dan latihan praktikum Modul 2 Pemrograman Mobile menggunakan 
    flutter pub get
    ```
 3. Jalankan aplikasi (pilih device / emulator / chrome):
+   ```bash
+   flutter run
+   ```
+
+---
+
+## Bagian 3: Implementasi Routing, Sidemenu, & Shared Preferences (`router_flutter/`)
+
+Implementasi tugas praktikum Pemrograman Mobile yang mencakup pengelolaan rute navigasi antar halaman, menu bilah samping (*Navigation Drawer / Sidemenu*), serta persistensi data sesi login menggunakan **`shared_preferences`**.
+
+### Fitur yang Diimplementasikan:
+1. **Halaman Login (`router_flutter/lib/login_page.dart`)**:
+   * Input teks Username dan Password (`obscureText: true`).
+   * Validasi login (akun demo: username `admin` dan password `admin`).
+   * Dialog interaktif (`AlertDialog`) konfirmasi login berhasil atau gagal.
+   * Penyimpanan username ke local storage via `SharedPreferences`.
+2. **Halaman Home (`router_flutter/lib/home_page.dart`)**:
+   * Mengambil dan menampilkan nama user secara dinamis dari `SharedPreferences`.
+   * Terintegrasi dengan drawer navigasi (*Sidemenu*).
+3. **Halaman About (`router_flutter/lib/about_page.dart`)**:
+   * Halaman informasi statis yang dapat diakses melalui drawer menu.
+4. **Menu Bilah Samping / Drawer (`router_flutter/lib/sidemenu.dart`)**:
+   * Widget `Drawer` yang menghubungkan halaman Home dan About menggunakan `Navigator.push` dan `MaterialPageRoute`.
+
+### Demonstrasi Video
+Demonstrasi alur aplikasi (login, validasi, drawer, dan navigasi) dapat dilihat pada file:
+🎬 **[Tonton Video Demo (router_flutter/demo/demo.mp4)](router_flutter/demo/demo.mp4)**
+
+### Cara Menjalankan:
+1. Masuk ke direktori:
+   ```bash
+   cd router_flutter
+   ```
+2. Unduh dependencies:
+   ```bash
+   flutter pub get
+   ```
+3. Jalankan aplikasi:
    ```bash
    flutter run
    ```

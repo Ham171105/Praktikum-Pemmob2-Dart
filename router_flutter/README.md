@@ -13,21 +13,11 @@ Aplikasi **`router_flutter`** merupakan implementasi tugas praktikum Pemrograman
 
 ---
 
-## Display & Demonstrasi Aplikasi
+## Video Demonstrasi Aplikasi
 
-### Tampilan Halaman Login
-<p align="center">
-  <img src="screenshot/login_page.png" width="280" alt="Halaman Login">
-</p>
+https://github.com/Ham171105/Praktikum-Pemmob2-Dart/raw/main/router_flutter/demo/demo.mp4
 
-### Video Demo Aplikasi
-Demonstrasi alur login (sukses & gagal), penyimpanan sesi username ke local storage, dan navigasi sidemenu ke Home Page & About Page dapat dilihat pada video berikut:
-
-🎬 **[Lihat / Download Video Demonstrasi (demo/demo.mp4)](demo/demo.mp4)**
-
-<p align="center">
-  <video src="demo/demo.mp4" width="300" controls></video>
-</p>
+🎬 **[Klik untuk Putar Video Demonstrasi (demo/demo.mp4)](https://github.com/Ham171105/Praktikum-Pemmob2-Dart/blob/main/router_flutter/demo/demo.mp4)**
 
 ---
 

@@ -11,15 +11,18 @@ Repository ini berisi kumpulan tugas dan latihan praktikum mata kuliah Pemrogram
 
 ---
 
-## Preview Aplikasi
+## Preview & Demo Aplikasi
+
+### 1. Tampilan Hasil Praktikum Flutter (`belajarflutter`)
 <p align="center">
-  <img src="belajarflutter/screenshot/list_data_produk.png" width="260" alt="List Data Produk" />
-  &nbsp;&nbsp;&nbsp;&nbsp;
-  <img src="router_flutter/screenshot/login_page.png" width="260" alt="Login Page" />
+  <img src="belajarflutter/screenshot/list_data_produk.png" width="280" alt="List Data Produk" />
 </p>
-<p align="center">
-  <em>Kiri: Praktikum Dasar Flutter (belajarflutter) &nbsp;|&nbsp; Kanan: Praktikum Routing & Session (router_flutter)</em>
-</p>
+
+### 2. Video Demo Routing & Session (`router_flutter`)
+
+https://github.com/Ham171105/Praktikum-Pemmob2-Dart/raw/main/router_flutter/demo/demo.mp4
+
+> 🎬 **[Klik di sini untuk memutar Video Demo router_flutter](https://github.com/Ham171105/Praktikum-Pemmob2-Dart/blob/main/router_flutter/demo/demo.mp4)**
 
 ---
 
@@ -122,9 +125,10 @@ Implementasi tugas praktikum Pemrograman Mobile yang mencakup pengelolaan rute n
 4. **Menu Bilah Samping / Drawer (`router_flutter/lib/sidemenu.dart`)**:
    * Widget `Drawer` yang menghubungkan halaman Home dan About menggunakan `Navigator.push` dan `MaterialPageRoute`.
 
-### Demonstrasi Video
-Demonstrasi alur aplikasi (login, validasi, drawer, dan navigasi) dapat dilihat pada file:
-🎬 **[Tonton Video Demo (router_flutter/demo/demo.mp4)](router_flutter/demo/demo.mp4)**
+### Video Demonstrasi
+https://github.com/Ham171105/Praktikum-Pemmob2-Dart/raw/main/router_flutter/demo/demo.mp4
+
+🎬 **[Putar Video Demo (demo.mp4)](https://github.com/Ham171105/Praktikum-Pemmob2-Dart/blob/main/router_flutter/demo/demo.mp4)**
 
 ### Cara Menjalankan:
 1. Masuk ke direktori:

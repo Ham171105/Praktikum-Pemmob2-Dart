@@ -176,11 +176,7 @@ Implementasi tugas praktikum Pemrograman Mobile yang mencakup pembuatan model da
    * Menampilkan informasi detail produk beserta aksi **EDIT** dan **DELETE** (dengan `AlertDialog` konfirmasi).
 
 ### Video Demonstrasi Toko Kita
-<!-- =================================================================== -->
-<!-- TEMPEL / DRAG & DROP LINK VIDEO DEMO TOKOKITA DI BAWAH INI         -->
-<!-- =================================================================== -->
-
-*(Silakan drag & drop video demo tokokita kamu di sini)*
+https://github.com/user-attachments/assets/6ba181ee-16c4-42d3-b013-1ca215e25293
 
 <!-- =================================================================== -->
 

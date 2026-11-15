@@ -18,9 +18,28 @@ Repository ini berisi kumpulan tugas dan latihan praktikum mata kuliah Pemrogram
   <img src="belajarflutter/screenshot/list_data_produk.png" width="280" alt="List Data Produk" />
 </p>
 
+### 2. Video Demo Routing & Session (`router_flutter`)
+https://github.com/user-attachments/assets/edc75c85-87eb-4a9c-b0dc-b2914beb90a9
+
+### 3. Video Demo Aplikasi Toko Kita (`tokokita`)
+
+<!-- =================================================================== -->
+<!-- TEMPEL / DRAG & DROP LINK VIDEO DEMO TOKOKITA DI BAWAH INI         -->
+<!-- =================================================================== -->
+
+*(Silakan drag & drop video demo tokokita kamu di sini)*
+
+<!-- =================================================================== -->
 
 ---
 
+## Daftar Isi
+1. [Bagian 1: Implementasi Struktur Data Queue (Dart)](#bagian-1-implementasi-struktur-data-queue-dart)
+2. [Bagian 2: Implementasi Dasar Flutter (`belajarflutter/`)](#bagian-2-implementasi-dasar-flutter-belajarflutter)
+3. [Bagian 3: Implementasi Routing, Sidemenu, & Shared Preferences (`router_flutter/`)](#bagian-3-implementasi-routing-sidemenu--shared-preferences-router_flutter)
+4. [Bagian 4: Implementasi Aplikasi Toko Kita (`tokokita/`)](#bagian-4-implementasi-aplikasi-toko-kita-tokokita)
+
+---
 
 ## Bagian 1: Implementasi Struktur Data Queue (Dart)
 
@@ -123,6 +142,52 @@ https://github.com/user-attachments/assets/edc75c85-87eb-4a9c-b0dc-b2914beb90a9
 1. Masuk ke direktori:
    ```bash
    cd router_flutter
+   ```
+2. Unduh dependencies:
+   ```bash
+   flutter pub get
+   ```
+3. Jalankan aplikasi:
+   ```bash
+   flutter run
+   ```
+
+---
+
+## Bagian 4: Implementasi Aplikasi Toko Kita (`tokokita/`)
+
+Implementasi tugas praktikum Pemrograman Mobile yang mencakup pembuatan model data (Login, Registrasi, Produk), form validasi pendaftaran user & login, daftar produk dinamis dengan `ListView`, form tambah & ubah produk, serta halaman detail produk dengan konfirmasi hapus data.
+
+### Fitur yang Diimplementasikan:
+1. **Model Data (`tokokita/lib/model/`)**:
+   * `Login` (`login.dart`): Mengelola struktur data login dan token API.
+   * `Registrasi` (`registrasi.dart`): Mengelola respon registrasi user baru.
+   * `Produk` (`produk.dart`): Model entitas barang (id, kode_produk, nama_produk, harga).
+2. **Halaman Registrasi (`tokokita/lib/ui/registrasi_page.dart`)**:
+   * Form registrasi dengan validasi Nama (min 3 karakter), Email (format regex), Password (min 6 karakter), dan Konfirmasi Password.
+3. **Halaman Login (`tokokita/lib/ui/login_page.dart`)**:
+   * Form login dengan validasi field email & password dan menu menuju halaman registrasi.
+4. **Halaman List Produk (`tokokita/lib/ui/produk_page.dart`)**:
+   * Menampilkan daftar list produk menggunakan `Card` dan `ListTile`.
+   * Dilengkapi tombol navigasi tambah produk (`+`) dan drawer samping (Logout).
+5. **Halaman Form Produk (`tokokita/lib/ui/produk_form.dart`)**:
+   * Form dinamis untuk **TAMBAH PRODUK** atau **UBAH PRODUK** sesuai dengan parameter objek produk yang diterima.
+6. **Halaman Detail Produk (`tokokita/lib/ui/produk_detail.dart`)**:
+   * Menampilkan informasi detail produk beserta aksi **EDIT** dan **DELETE** (dengan `AlertDialog` konfirmasi).
+
+### Video Demonstrasi Toko Kita
+<!-- =================================================================== -->
+<!-- TEMPEL / DRAG & DROP LINK VIDEO DEMO TOKOKITA DI BAWAH INI         -->
+<!-- =================================================================== -->
+
+*(Silakan drag & drop video demo tokokita kamu di sini)*
+
+<!-- =================================================================== -->
+
+### Cara Menjalankan:
+1. Masuk ke direktori:
+   ```bash
+   cd tokokita
    ```
 2. Unduh dependencies:
    ```bash

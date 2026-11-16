@@ -156,24 +156,21 @@ https://github.com/user-attachments/assets/edc75c85-87eb-4a9c-b0dc-b2914beb90a9
 
 ## Bagian 4: Implementasi Aplikasi Toko Kita (`tokokita/`)
 
-Implementasi tugas praktikum Pemrograman Mobile yang mencakup pembuatan model data (Login, Registrasi, Produk), form validasi pendaftaran user & login, daftar produk dinamis dengan `ListView`, form tambah & ubah produk, serta halaman detail produk dengan konfirmasi hapus data.
+Implementasi tugas praktikum Pemrograman Mobile (Modul 5) yang menghubungkan aplikasi Flutter dengan RESTful API menggunakan pola arsitektur **BLoC**, manajemen sesi token via **`shared_preferences`**, komunikasi jaringan melalui paket **`http`**, penanganan *exception* khusus, serta dialog notifikasi kustom.
 
-### Fitur yang Diimplementasikan:
-1. **Model Data (`tokokita/lib/model/`)**:
-   * `Login` (`login.dart`): Mengelola struktur data login dan token API.
-   * `Registrasi` (`registrasi.dart`): Mengelola respon registrasi user baru.
-   * `Produk` (`produk.dart`): Model entitas barang (id, kode_produk, nama_produk, harga).
-2. **Halaman Registrasi (`tokokita/lib/ui/registrasi_page.dart`)**:
-   * Form registrasi dengan validasi Nama (min 3 karakter), Email (format regex), Password (min 6 karakter), dan Konfirmasi Password.
-3. **Halaman Login (`tokokita/lib/ui/login_page.dart`)**:
-   * Form login dengan validasi field email & password dan menu menuju halaman registrasi.
-4. **Halaman List Produk (`tokokita/lib/ui/produk_page.dart`)**:
-   * Menampilkan daftar list produk menggunakan `Card` dan `ListTile`.
-   * Dilengkapi tombol navigasi tambah produk (`+`) dan drawer samping (Logout).
-5. **Halaman Form Produk (`tokokita/lib/ui/produk_form.dart`)**:
-   * Form dinamis untuk **TAMBAH PRODUK** atau **UBAH PRODUK** sesuai dengan parameter objek produk yang diterima.
-6. **Halaman Detail Produk (`tokokita/lib/ui/produk_detail.dart`)**:
-   * Menampilkan informasi detail produk beserta aksi **EDIT** dan **DELETE** (dengan `AlertDialog` konfirmasi).
+### Fitur dan Arsitektur yang Diimplementasikan:
+1. **Helpers (`tokokita/lib/helpers/`)**:
+   * `UserInfo` (`user_info.dart`): Mengelola token dan sesi login via SharedPreferences.
+   * `Api` (`api.dart`): Wrapper HTTP client untuk request POST, GET, DELETE dengan Bearer Token.
+   * `ApiUrl` (`api_url.dart`): Konfigurasi endpoint REST API.
+   * `AppException` (`app_exception.dart`): Kelas exception kustom penanganan error jaringan.
+2. **BLoC (`tokokita/lib/bloc/`)**:
+   * `RegistrasiBloc`, `LoginBloc`, `LogoutBloc`, dan `ProdukBloc` sebagai jembatan logika bisnis antara antarmuka (UI) dan REST API.
+3. **Model Data (`tokokita/lib/model/`)**:
+   * `Login`, `Registrasi`, dan `Produk` dengan serializer `fromJson` aman (`int.tryParse`).
+4. **Widgets & UI (`tokokita/lib/widget/` & `tokokita/lib/ui/`)**:
+   * `SuccessDialog` & `WarningDialog`: Dialog pop-up hasil operasi.
+   * `RegistrasiPage`, `LoginPage`, `ProdukPage`, `ProdukForm`, dan `ProdukDetail` terintegrasi penuh dengan BLoC.
 
 ### Video Demonstrasi Toko Kita
 https://github.com/user-attachments/assets/6ba181ee-16c4-42d3-b013-1ca215e25293

@@ -21,58 +21,57 @@
 
 ## Deskripsi Proyek
 
-Aplikasi **`tokokita`** merupakan implementasi tugas praktikum Pemrograman Mobile yang mencakup pembuatan model data (Login, Registrasi, Produk), form validasi registrasi & login, list produk menggunakan `Card` dan `ListTile`, form tambah/edit produk secara dinamis, serta halaman detail produk lengkap dengan dialog konfirmasi hapus data.
+Aplikasi **`tokokita`** merupakan implementasi tugas praktikum Pemrograman Mobile (Modul 5) yang menghubungkan frontend Flutter dengan RESTful API backend menggunakan pola arsitektur **BLoC (Business Logic Component)**, manajemen sesi dengan **`shared_preferences`**, komunikasi jaringan melalui paket **`http`**, penanganan *exception* khusus, serta dialog notifikasi kustom.
 
 ---
 
-## Fitur dan Halaman yang Diimplementasikan
+## Struktur Arsitektur dan Fitur (Modul 5)
 
-### 1. Model Data (`lib/model/`)
-* **`Login` (`lib/model/login.dart`)**: Model data untuk menampung respon login (code, status, token, userID, userEmail) dengan serializer `fromJson`.
-* **`Registrasi` (`lib/model/registrasi.dart`)**: Model data untuk menampung respon registrasi (code, status, data) dengan serializer `fromJson`.
-* **`Produk` (`lib/model/produk.dart`)**: Model entitas data produk (id, kodeProduk, namaProduk, hargaProduk) dengan serializer `fromJson`.
+### 1. Helpers (`lib/helpers/`)
+* **`UserInfo` (`user_info.dart`)**: Pengelolaan data sesi lokal menggunakan `SharedPreferences` untuk menyimpan token (`setToken`, `getToken`), user ID (`setUserID`, `getUserID`), serta fungsi `logout()`.
+* **`Api` (`api.dart`)**: Wrapper HTTP client untuk request `POST`, `GET`, dan `DELETE` dengan otomatis menyertakan header otorisasi Bearer Token dan pengecekan status code.
+* **`ApiUrl` (`api_url.dart`)**: Konfigurasi endpoint REST API (base URL `http://10.0.2.2/toko-api/public`, registrasi, login, produk CRUD).
+* **`AppException` (`app_exception.dart`)**: Kelas exception kustom untuk menangani error jaringan (`FetchDataException`, `BadRequestException`, `UnauthorisedException`, `InvalidInputException`).
 
-### 2. Halaman Registrasi (`lib/ui/registrasi_page.dart`)
-* Form pendaftaran user baru menggunakan `GlobalKey<FormState>`.
-* **Validasi Nama**: Minimal 3 karakter.
-* **Validasi Email**: Memastikan format email valid menggunakan pola regex.
-* **Validasi Password**: Minimal 6 karakter.
-* **Validasi Konfirmasi Password**: Memastikan password konfirmasi sama persis dengan input password sebelumnya.
+### 2. BLoC - Business Logic Component (`lib/bloc/`)
+* **`RegistrasiBloc` (`registrasi_bloc.dart`)**: Menghubungkan proses pendaftaran user baru ke endpoint registrasi API.
+* **`LoginBloc` (`login_bloc.dart`)**: Mengirim kredensial login dan mengembalikan objek `Login` beserta auth token.
+* **`LogoutBloc` (`logout_bloc.dart`)**: Menghapus data sesi lokal saat user logout.
+* **`ProdukBloc` (`produk_bloc.dart`)**: Mengelola data produk (mengambil list produk via `getProduks()`, menambah produk via `addProduk()`, mengupdate via `updateProduk()`, dan menghapus via `deleteProduk()`).
 
-### 3. Halaman Login (`lib/ui/login_page.dart`)
-* Form autentikasi login dengan validasi field email dan password tidak boleh kosong.
-* Tombol / menu interaktif **Registrasi** untuk navigasi ke halaman `RegistrasiPage`.
+### 3. Model Data (`lib/model/`)
+* **`Login` (`login.dart`)**: Model respon login dengan parser aman `int.tryParse` untuk ID user.
+* **`Registrasi` (`registrasi.dart`)**: Model respon registrasi akun baru.
+* **`Produk` (`produk.dart`)**: Model data barang dengan parser aman `int.tryParse` untuk ID dan harga produk.
 
-### 4. Halaman List Produk (`lib/ui/produk_page.dart`)
-* Menampilkan daftar item produk dalam bentuk `ListView`.
-* Widget kustom `ItemProduk` yang dibungkus `GestureDetector`, `Card`, dan `ListTile`.
-* Tombol Tambah (`+`) pada `AppBar` untuk membuka halaman `ProdukForm`.
-* Menu drawer samping dengan item logout.
-* Navigasi ke halaman `ProdukDetail` saat salah satu kartu produk diklik.
+### 4. Custom Widgets (`lib/widget/`)
+* **`SuccessDialog` (`success_dialog.dart`)**: Dialog pop-up hijau kustom saat operasi berhasil.
+* **`WarningDialog` (`warning_dialog.dart`)**: Dialog pop-up merah kustom saat operasi gagal / terjadi error.
 
-### 5. Halaman Form Produk (`lib/ui/produk_form.dart`)
-* Form dinamis yang dapat digunakan untuk **TAMBAH PRODUK** (tombol *SIMPAN*) atau **UBAH PRODUK** (tombol *UBAH*) saat menerima objek data `Produk`.
-* Input field: Kode Produk, Nama Produk, dan Harga Produk lengkap dengan validasi.
+### 5. Antarmuka Pengguna / UI (`lib/ui/`)
+* **`RegistrasiPage` (`registrasi_page.dart`)**: Form registrasi dengan validasi form (Nama min 3 karakter, format regex Email, Password min 6 karakter, Konfirmasi Password) dan integrasi `RegistrasiBloc`.
+* **`LoginPage` (`login_page.dart`)**: Form autentikasi login dengan `LoginBloc`, penyimpanan sesi via `UserInfo`, dan navigasi otomatis ke `ProdukPage`.
+* **`ProdukPage` (`produk_page.dart`)**: Menampilkan data produk langsung dari server menggunakan `FutureBuilder<List>` dan `ProdukBloc.getProduks()`, tombol navigasi tambah produk (`+`), serta drawer logout.
+* **`ProdukForm` (`produk_form.dart`)**: Form dinamis untuk menambah produk baru atau mengubah produk yang sudah ada menggunakan `ProdukBloc`.
+* **`ProdukDetail` (`produk_detail.dart`)**: Halaman rincian produk dengan opsi **EDIT** dan **DELETE** (didukung konfirmasi dialog).
 
-### 6. Halaman Detail Produk (`lib/ui/produk_detail.dart`)
-* Menampilkan rincian data produk (Kode, Nama, Harga).
-* Tombol **EDIT** untuk mengarahkan pengguna ke halaman `ProdukForm` membawa data produk yang ingin diubah.
-* Tombol **DELETE** yang memunculkan `AlertDialog` untuk konfirmasi hapus data ("Yakin ingin menghapus data ini?").
+### 6. Entry Point (`lib/main.dart`)
+* Menggunakan pengecekan sesi login asinkron (`isLogin()`). Jika token tersimpan di local storage, aplikasi langsung membuka `ProdukPage()`, sebaliknya jika belum login akan diarahkan ke `LoginPage()`.
 
 ---
 
 ## Cara Menjalankan
 
-1. Masuk ke direktori proyek:
+1. Pastikan web server API backend lokal (Laragon/XAMPP) sudah berjalan.
+2. Masuk ke direktori proyek:
    ```bash
    cd tokokita
    ```
-2. Unduh dependencies Flutter:
+3. Unduh dependencies Flutter:
    ```bash
    flutter pub get
    ```
-3. Jalankan aplikasi:
+4. Jalankan aplikasi pada emulator atau perangkat:
    ```bash
    flutter run
    ```
-   *(Tips: Ubah baris `home` pada `lib/main.dart` untuk menguji halaman `RegistrasiPage()`, `LoginPage()`, atau `ProdukPage()`)*

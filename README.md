@@ -22,14 +22,7 @@ Repository ini berisi kumpulan tugas dan latihan praktikum mata kuliah Pemrogram
 https://github.com/user-attachments/assets/edc75c85-87eb-4a9c-b0dc-b2914beb90a9
 
 ### 3. Video Demo Aplikasi Toko Kita (`tokokita`)
-
-<!-- =================================================================== -->
-<!-- TEMPEL / DRAG & DROP LINK VIDEO DEMO TOKOKITA DI BAWAH INI         -->
-<!-- =================================================================== -->
-
-*(Silakan drag & drop video demo tokokita kamu di sini)*
-
-<!-- =================================================================== -->
+https://github.com/user-attachments/assets/6ba181ee-16c4-42d3-b013-1ca215e25293
 
 ---
 

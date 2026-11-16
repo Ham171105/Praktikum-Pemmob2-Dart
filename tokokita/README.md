@@ -9,13 +9,7 @@
 
 ## Video Demonstrasi Aplikasi
 
-<!-- =================================================================== -->
-<!-- TEMPEL / DRAG & DROP LINK VIDEO DEMO TOKOKITA ANDA DI BAWAH INI    -->
-<!-- =================================================================== -->
-
-*(Silakan drag & drop video demo kamu di sini melalui editor web GitHub)*
-
-<!-- =================================================================== -->
+https://github.com/user-attachments/assets/6ba181ee-16c4-42d3-b013-1ca215e25293
 
 ---
 

@@ -1,6 +1,6 @@
 # Tugas Praktikum Pemrograman Mobile
 
-Repository ini berisi kumpulan tugas dan latihan praktikum mata kuliah Pemrograman Mobile menggunakan bahasa pemrograman **Dart** dan framework **Flutter**.
+Repository ini berisi kumpulan tugas dan latihan praktikum mata kuliah Pemrograman Mobile menggunakan bahasa pemrograman **Dart**, framework **Flutter**, serta backend RESTful API **CodeIgniter 4**.
 
 ---
 
@@ -21,8 +21,15 @@ Repository ini berisi kumpulan tugas dan latihan praktikum mata kuliah Pemrogram
 ### 2. Video Demo Routing & Session (`router_flutter`)
 https://github.com/user-attachments/assets/edc75c85-87eb-4a9c-b0dc-b2914beb90a9
 
-### 3. Video Demo Aplikasi Toko Kita (`tokokita`)
-https://github.com/user-attachments/assets/6ba181ee-16c4-42d3-b013-1ca215e25293
+### 3. Video Demo Aplikasi Toko Kita (`tokokita` & `toko-api`)
+
+<!-- =================================================================== -->
+<!-- TEMPEL / DRAG & DROP LINK VIDEO DEMO TOKOKITA DI BAWAH INI         -->
+<!-- =================================================================== -->
+
+*(Silakan drag & drop video demo tokokita kamu di sini melalui editor web GitHub)*
+
+<!-- =================================================================== -->
 
 ---
 
@@ -30,7 +37,8 @@ https://github.com/user-attachments/assets/6ba181ee-16c4-42d3-b013-1ca215e25293
 1. [Bagian 1: Implementasi Struktur Data Queue (Dart)](#bagian-1-implementasi-struktur-data-queue-dart)
 2. [Bagian 2: Implementasi Dasar Flutter (`belajarflutter/`)](#bagian-2-implementasi-dasar-flutter-belajarflutter)
 3. [Bagian 3: Implementasi Routing, Sidemenu, & Shared Preferences (`router_flutter/`)](#bagian-3-implementasi-routing-sidemenu--shared-preferences-router_flutter)
-4. [Bagian 4: Implementasi Aplikasi Toko Kita (`tokokita/`)](#bagian-4-implementasi-aplikasi-toko-kita-tokokita)
+4. [Bagian 4: Implementasi Backend REST API CodeIgniter 4 (`toko-api/`)](#bagian-4-implementasi-backend-rest-api-codeigniter-4-toko-api)
+5. [Bagian 5: Implementasi Aplikasi Mobile Toko Kita (`tokokita/`)](#bagian-5-implementasi-aplikasi-mobile-toko-kita-tokokita)
 
 ---
 
@@ -147,39 +155,99 @@ https://github.com/user-attachments/assets/edc75c85-87eb-4a9c-b0dc-b2914beb90a9
 
 ---
 
-## Bagian 4: Implementasi Aplikasi Toko Kita (`tokokita/`)
+## Bagian 4: Implementasi Backend REST API CodeIgniter 4 (`toko-api/`)
 
-Implementasi tugas praktikum Pemrograman Mobile (Modul 5) yang menghubungkan aplikasi Flutter dengan RESTful API menggunakan pola arsitektur **BLoC**, manajemen sesi token via **`shared_preferences`**, komunikasi jaringan melalui paket **`http`**, penanganan *exception* khusus, serta dialog notifikasi kustom.
+Implementasi web service RESTful API (Modul 4) menggunakan framework **CodeIgniter 4** dan database **MySQL** sebagai penyedia layanan backend untuk aplikasi mobile `tokokita`.
+
+### Struktur Database & Schema (`toko_api`)
+File dump SQL database disertakan pada [toko_api.sql](file:///C:/Users/Ilham/AndroidStudioProjects/Praktikum-Pemmob2-Dart/toko-api/toko_api.sql).
+1. **Tabel `member`**: Menyimpan kredensial pengguna (`id`, `nama`, `email`, `password` yang dienkripsi via `password_hash`).
+2. **Tabel `member_token`**: Menyimpan auth key token sesi aktif (`id`, `member_id` foreign key, `auth_key`).
+3. **Tabel `produk`**: Menyimpan katalog produk (`id`, `kode_produk`, `nama_produk`, `harga`).
+
+### Konfigurasi & Arsitektur Backend:
+1. **Konfigurasi Database (`app/Config/Database.php`)**:
+   * Terhubung ke database `toko_api` pada MySQL `localhost:3306`, user `root` tanpa password.
+2. **Model (`app/Models/`)**:
+   * `MRegistrasi.php`: Model tabel `member` untuk pendaftaran akun.
+   * `MMember.php`: Model tabel `member` untuk validasi akun saat login.
+   * `MLogin.php`: Model tabel `member_token` untuk pencatatan token sesi login.
+   * `MProduk.php`: Model tabel `produk` untuk operasi data produk.
+3. **Controller (`app/Controllers/`)**:
+   * `RestfulController.php`: Controller dasar yang meng-extend `CodeIgniter\RESTful\ResourceController` dan menyediakan method standarisasi JSON respon `responseHasil($code, $status, $data)`.
+   * `RegistrasiController.php`: Menangani request `POST /registrasi` dengan validasi dan hashing password via `PASSWORD_DEFAULT`.
+   * `LoginController.php`: Menangani request `POST /login` dengan verifikasi via `password_verify` dan mengenerate token acak via method `RandomString()`.
+   * `ProdukController.php`: Menangani CRUD produk lengkap (`create`, `list`, `detail`, `ubah`, `hapus`).
+4. **Routing (`app/Config/Routes.php`)**:
+   * `POST /registrasi` -> `RegistrasiController::registrasi`
+   * `POST /login` -> `LoginController::login`
+   * `GET  /produk` -> `ProdukController::list`
+   * `POST /produk` -> `ProdukController::create`
+   * `GET  /produk/{id}` -> `ProdukController::detail/$1`
+   * `POST /produk/{id}/update` & `PUT /produk/{id}` -> `ProdukController::ubah/$1`
+   * `DELETE /produk/{id}` -> `ProdukController::hapus/$1`
+
+### Cara Menjalankan Backend:
+1. Pastikan Apache & MySQL pada Laragon atau XAMPP sudah berjalan.
+2. Import database jika belum ada:
+   ```bash
+   mysql -u root -e "CREATE DATABASE IF NOT EXISTS toko_api;"
+   mysql -u root toko_api < toko-api/toko_api.sql
+   ```
+3. Akses via Laragon (`http://localhost/toko-api/public/` atau `http://10.0.2.2/toko-api/public/` pada emulator Android).
+4. Atau jalankan server built-in Spark:
+   ```bash
+   cd toko-api
+   php spark serve --port 8080
+   ```
+
+---
+
+## Bagian 5: Implementasi Aplikasi Mobile Toko Kita (`tokokita/`)
+
+Implementasi tugas praktikum Pemrograman Mobile (Modul 5) yang menghubungkan antarmuka Flutter dengan RESTful API backend menggunakan pola arsitektur **BLoC (Business Logic Component)**, manajemen sesi token via **`shared_preferences`**, komunikasi jaringan melalui paket **`http`**, penanganan *exception* kustom, serta pop-up dialog interaktif.
 
 ### Fitur dan Arsitektur yang Diimplementasikan:
 1. **Helpers (`tokokita/lib/helpers/`)**:
-   * `UserInfo` (`user_info.dart`): Mengelola token dan sesi login via SharedPreferences.
-   * `Api` (`api.dart`): Wrapper HTTP client untuk request POST, GET, DELETE dengan Bearer Token.
-   * `ApiUrl` (`api_url.dart`): Konfigurasi endpoint REST API.
-   * `AppException` (`app_exception.dart`): Kelas exception kustom penanganan error jaringan.
+   * `UserInfo` (`user_info.dart`): Mengelola token dan sesi login via SharedPreferences (`setToken`, `getToken`, `setUserID`, `getUserID`, `logout`).
+   * `Api` (`api.dart`): Wrapper HTTP client untuk request POST, GET, dan DELETE dengan otomatis menyertakan header `Authorization: Bearer <token>` dan validasi status code.
+   * `ApiUrl` (`api_url.dart`): Konfigurasi endpoint REST API (`http://10.0.2.2/toko-api/public` untuk emulator Android).
+   * `AppException` (`app_exception.dart`): Kelas exception kustom untuk penanganan error jaringan (`FetchDataException`, `BadRequestException`, `UnauthorisedException`, `InvalidInputException`).
 2. **BLoC (`tokokita/lib/bloc/`)**:
-   * `RegistrasiBloc`, `LoginBloc`, `LogoutBloc`, dan `ProdukBloc` sebagai jembatan logika bisnis antara antarmuka (UI) dan REST API.
+   * `RegistrasiBloc`, `LoginBloc`, `LogoutBloc`, dan `ProdukBloc` sebagai jembatan logika bisnis antara UI dan backend REST API.
 3. **Model Data (`tokokita/lib/model/`)**:
-   * `Login`, `Registrasi`, dan `Produk` dengan serializer `fromJson` aman (`int.tryParse`).
-4. **Widgets & UI (`tokokita/lib/widget/` & `tokokita/lib/ui/`)**:
-   * `SuccessDialog` & `WarningDialog`: Dialog pop-up hasil operasi.
-   * `RegistrasiPage`, `LoginPage`, `ProdukPage`, `ProdukForm`, dan `ProdukDetail` terintegrasi penuh dengan BLoC.
+   * `Login`, `Registrasi`, dan `Produk` dengan serializer `fromJson` yang aman terhadap casting tipe data.
+4. **Custom Widgets (`tokokita/lib/widget/`)**:
+   * `SuccessDialog`: Dialog hijau saat operasi registrasi/CRUD berhasil.
+   * `WarningDialog`: Dialog merah saat operasi gagal / terjadi error.
+5. **Antarmuka Pengguna / UI (`tokokita/lib/ui/`)**:
+   * `RegistrasiPage`: Form pendaftaran pengguna baru dengan validasi form lengkap.
+   * `LoginPage`: Form autentikasi login terhubung ke backend API.
+   * `ProdukPage`: Menampilkan list produk realtime dari database server menggunakan `FutureBuilder` dan drawer logout.
+   * `ProdukForm`: Form input dan edit data produk.
+   * `ProdukDetail`: Rincian produk dengan opsi edit serta tombol hapus dengan konfirmasi dialog.
 
 ### Video Demonstrasi Toko Kita
-https://github.com/user-attachments/assets/6ba181ee-16c4-42d3-b013-1ca215e25293
+
+<!-- =================================================================== -->
+<!-- TEMPEL / DRAG & DROP LINK VIDEO DEMO TOKOKITA DI BAWAH INI         -->
+<!-- =================================================================== -->
+
+*(Silakan drag & drop video demo tokokita kamu di sini melalui editor web GitHub)*
 
 <!-- =================================================================== -->
 
 ### Cara Menjalankan:
-1. Masuk ke direktori:
+1. Pastikan backend server `toko-api` sudah aktif.
+2. Masuk ke direktori:
    ```bash
    cd tokokita
    ```
-2. Unduh dependencies:
+3. Unduh dependencies:
    ```bash
    flutter pub get
    ```
-3. Jalankan aplikasi:
+4. Jalankan aplikasi pada emulator atau perangkat:
    ```bash
    flutter run
    ```

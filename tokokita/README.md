@@ -7,15 +7,21 @@
 
 ---
 
-## Video Demonstrasi Aplikasi
+## Video Demonstrasi Aplikasi Toko Kita
 
-https://github.com/user-attachments/assets/6ba181ee-16c4-42d3-b013-1ca215e25293
+<!-- =================================================================== -->
+<!-- TEMPEL / DRAG & DROP LINK VIDEO DEMO TOKOKITA DI BAWAH INI         -->
+<!-- =================================================================== -->
+
+*(Silakan drag & drop video demo kamu di sini melalui editor web GitHub)*
+
+<!-- =================================================================== -->
 
 ---
 
 ## Deskripsi Proyek
 
-Aplikasi **`tokokita`** merupakan implementasi tugas praktikum Pemrograman Mobile (Modul 5) yang menghubungkan frontend Flutter dengan RESTful API backend menggunakan pola arsitektur **BLoC (Business Logic Component)**, manajemen sesi dengan **`shared_preferences`**, komunikasi jaringan melalui paket **`http`**, penanganan *exception* khusus, serta dialog notifikasi kustom.
+Aplikasi **`tokokita`** merupakan implementasi tugas praktikum Pemrograman Mobile (Modul 5) yang menghubungkan frontend Flutter dengan RESTful API backend CodeIgniter 4 menggunakan pola arsitektur **BLoC (Business Logic Component)**, manajemen sesi dengan **`shared_preferences`**, komunikasi jaringan melalui paket **`http`**, penanganan *exception* khusus, serta dialog notifikasi kustom.
 
 ---
 
@@ -56,7 +62,7 @@ Aplikasi **`tokokita`** merupakan implementasi tugas praktikum Pemrograman Mobil
 
 ## Cara Menjalankan
 
-1. Pastikan web server API backend lokal (Laragon/XAMPP) sudah berjalan.
+1. Pastikan backend server REST API `toko-api` (Laragon / XAMPP) sudah berjalan.
 2. Masuk ke direktori proyek:
    ```bash
    cd tokokita

@@ -229,13 +229,7 @@ Implementasi tugas praktikum Pemrograman Mobile (Modul 5) yang menghubungkan ant
 
 ### Video Demonstrasi Toko Kita
 
-<!-- =================================================================== -->
-<!-- TEMPEL / DRAG & DROP LINK VIDEO DEMO TOKOKITA DI BAWAH INI         -->
-<!-- =================================================================== -->
-
-*(Silakan drag & drop video demo tokokita kamu di sini melalui editor web GitHub)*
-
-<!-- =================================================================== -->
+https://github.com/user-attachments/assets/ed632c09-803a-4ca7-8a2e-b54898852291
 
 ### Cara Menjalankan:
 1. Pastikan backend server `toko-api` sudah aktif.

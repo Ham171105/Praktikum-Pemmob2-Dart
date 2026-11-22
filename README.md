@@ -130,9 +130,14 @@ flutter run
 
 ---
 
-## 🔹 Bagian 4: Backend REST API CodeIgniter 4 (`toko-api/`)
+## 🔹 Bagian 4:  Operasi CRUD dengan API (Desain UI & Model)
 
 Implementasi web service RESTful API (Modul 4) menggunakan framework **CodeIgniter 4** dan database **MySQL** sebagai penyedia layanan backend untuk aplikasi mobile `tokokita`.
+Video Demonstrasi Toko Kita
+
+https://github.com/user-attachments/assets/e106de1c-15ff-4771-96f7-742235653cb0
+
+
 
 ### Struktur Database & Schema (`toko_api`)
 File dump SQL database disertakan pada [toko_api.sql](file:///C:/Users/Ilham/AndroidStudioProjects/Praktikum-Pemmob2-Dart/toko-api/toko_api.sql).

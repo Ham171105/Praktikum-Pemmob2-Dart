@@ -19,8 +19,8 @@ Repository ini berisi kumpulan tugas dan latihan praktikum mata kuliah **Pemrogr
 1. [Bagian 1: Struktur Data Queue (Dart)](#-bagian-1-struktur-data-queue-dart)
 2. [Bagian 2: Implementasi Dasar Flutter (`belajarflutter/`)](#-bagian-2-implementasi-dasar-flutter-belajarflutter)
 3. [Bagian 3: Routing, Sidemenu, & Shared Preferences (`router_flutter/`)](#-bagian-3-routing-sidemenu--shared-preferences-router_flutter)
-4. [Bagian 4: Backend REST API CodeIgniter 4 (`toko-api/`)](#-bagian-4-backend-rest-api-codeigniter-4-toko-api)
-5. [Bagian 5: Aplikasi Mobile Toko Kita (`tokokita/`)](#-bagian-5-aplikasi-mobile-toko-kita-tokokita)
+4. [Bagian 4: Operasi CRUD Produk (Tambah, Ubah, Hapus)](#-bagian-4-operasi-crud-produk-tambah-ubah-hapus)
+5. [Bagian 5: Integrasi REST API, Autentikasi, & Backend CI4 (`tokokita/` & `toko-api/`)](#-bagian-5-integrasi-rest-api-autentikasi--backend-ci4)
 
 ---
 
@@ -130,76 +130,31 @@ flutter run
 
 ---
 
-## 🔹 Bagian 4:  Operasi CRUD dengan API (Desain UI & Model)
+## 🔹 Bagian 4: Operasi CRUD Produk (Tambah, Ubah, Hapus)
 
-Implementasi web service RESTful API (Modul 4) menggunakan framework **CodeIgniter 4** dan database **MySQL** sebagai penyedia layanan backend untuk aplikasi mobile `tokokita`.
-Video Demonstrasi Toko Kita
+Implementasi operasi **CRUD (Create, Read, Update, Delete)** untuk pengelolaan katalog produk pada aplikasi mobile `tokokita`, mencakup perancangan model data produk, pembuatan antarmuka formulir, navigasi rincian, hingga mekanisme dialog konfirmasi.
 
+### 🎬 Video Demonstrasi CRUD Produk (Tambah, Ubah, Hapus)
 https://github.com/user-attachments/assets/e106de1c-15ff-4771-96f7-742235653cb0
 
-
-
-### Struktur Database & Schema (`toko_api`)
-File dump SQL database disertakan pada [toko_api.sql](file:///C:/Users/Ilham/AndroidStudioProjects/Praktikum-Pemmob2-Dart/toko-api/toko_api.sql).
-
-| Tabel | Kolom Utama | Deskripsi |
-| :--- | :--- | :--- |
-| **`member`** | `id`, `nama`, `email`, `password` | Menyimpan data user (password di-hash via `PASSWORD_DEFAULT`). |
-| **`member_token`** | `id`, `member_id`, `auth_key` | Menyimpan token otorisasi sesi login (Foreign Key ke `member.id`). |
-| **`produk`** | `id`, `kode_produk`, `nama_produk`, `harga` | Menyimpan katalog data produk. |
-
-### Struktur Arsitektur Backend:
-1. **Konfigurasi Database (`app/Config/Database.php`)**: Terhubung ke database `toko_api` MySQL `localhost:3306`, user `root`.
-2. **Model (`app/Models/`)**:
-   * `MRegistrasi.php`: Model tabel `member` untuk pendaftaran akun baru.
-   * `MMember.php`: Model tabel `member` untuk verifikasi akun saat login.
-   * `MLogin.php`: Model tabel `member_token` untuk pencatatan token sesi login.
-   * `MProduk.php`: Model tabel `produk` untuk operasi data produk.
-3. **Controller (`app/Controllers/`)**:
-   * `RestfulController.php`: Base controller extends `CodeIgniter\RESTful\ResourceController` dengan format JSON dan method `responseHasil($code, $status, $data)`.
-   * `RegistrasiController.php`: Endpoint `POST /registrasi` untuk registrasi akun.
-   * `LoginController.php`: Endpoint `POST /login` dengan verifikasi via `password_verify` dan generate auth token via `RandomString()`.
-   * `ProdukController.php`: Endpoint CRUD produk lengkap (`create`, `list`, `detail`, `ubah`, `hapus`).
-
-### Cara Menjalankan Backend:
-1. Pastikan Apache & MySQL (Laragon / XAMPP) sudah aktif.
-2. Import database:
-   ```bash
-   mysql -u root -e "CREATE DATABASE IF NOT EXISTS toko_api;"
-   mysql -u root toko_api < toko-api/toko_api.sql
-   ```
-3. Base URL API dapat diakses di:
-   * **Local / Browser**: `http://localhost/toko-api/public/`
-   * **Android Emulator**: `http://10.0.2.2/toko-api/public/`
-
----
-
-## 🔹 Bagian 5: Aplikasi Mobile Toko Kita (`tokokita/`)
-
-Implementasi tugas praktikum Pemrograman Mobile (Modul 5) yang menghubungkan antarmuka Flutter dengan RESTful API backend menggunakan pola arsitektur **BLoC (Business Logic Component)**, manajemen sesi token via **`shared_preferences`**, komunikasi jaringan melalui paket **`http`**, penanganan *exception* kustom, serta pop-up dialog interaktif.
-
-### 🎬 Video Demonstrasi Toko Kita
-https://github.com/user-attachments/assets/ed632c09-803a-4ca7-8a2e-b54898852291
-
-### Fitur dan Arsitektur yang Diimplementasikan:
-1. **Helpers (`tokokita/lib/helpers/`)**:
-   * `UserInfo` (`user_info.dart`): Mengelola token dan sesi login via SharedPreferences (`setToken`, `getToken`, `setUserID`, `getUserID`, `logout`).
-   * `Api` (`api.dart`): Wrapper HTTP client untuk request POST, GET, dan DELETE dengan header `Authorization: Bearer <token>` dan validasi status code.
-   * `ApiUrl` (`api_url.dart`): Konfigurasi endpoint REST API (`http://10.0.2.2/toko-api/public`).
-   * `AppException` (`app_exception.dart`): Kelas exception kustom (`FetchDataException`, `BadRequestException`, `UnauthorisedException`, `InvalidInputException`).
-2. **BLoC (`tokokita/lib/bloc/`)**:
-   * `RegistrasiBloc`, `LoginBloc`, `LogoutBloc`, dan `ProdukBloc` sebagai pemisah logika bisnis dengan antarmuka pengguna.
-3. **Model Data (`tokokita/lib/model/`)**:
-   * `Login`, `Registrasi`, dan `Produk` dengan serializer `fromJson` yang aman dari error tipe data.
-4. **Custom Widgets (`tokokita/lib/widget/`)**:
-   * `SuccessDialog`: Dialog hijau saat operasi berhasil.
-   * `WarningDialog`: Dialog merah saat operasi gagal / terjadi error.
-5. **Antarmuka Pengguna / UI (`tokokita/lib/ui/`)**:
-   * `RegistrasiPage`: Form pendaftaran dengan validasi nama, email regex, dan panjang password.
-   * `LoginPage`: Form login terhubung ke backend REST API.
-   * `ProdukPage`: Menampilkan list produk realtime dari database server menggunakan `FutureBuilder`.
-   * `ProdukForm`: Form input dan edit data produk.
-   * `ProdukDetail`: Rincian produk dengan opsi edit serta tombol hapus dengan konfirmasi dialog.
+### Fitur CRUD yang Diimplementasikan:
+1. **Model Data Produk (`model/produk.dart`)**:
+   * Kelas model `Produk` dengan atribut `id`, `kodeProduk`, `namaProduk`, dan `hargaProduk`.
+   * Dilengkapi factory method `fromJson` untuk pemetaan data objek secara aman.
+2. **List Data Produk / Read (`ui/produk_page.dart`)**:
+   * Menampilkan daftar seluruh produk dalam antarmuka `ListView` dengan widget `Card` dan `ListTile`.
+   * Dilengkapi tombol navigasi tambah produk (`+`) pada bagian AppBar.
+3. **Tambah Produk / Create (`ui/produk_form.dart`)**:
+   * Formulir input untuk memasukkan **Kode Produk**, **Nama Produk**, dan **Harga**.
+   * Validasi input sebelum proses penyimpanan data.
+4. **Detail Produk (`ui/produk_detail.dart`)**:
+   * Menampilkan informasi rincian produk yang dipilih dari daftar list.
+   * Menyediakan dua tombol aksi utama: **EDIT** (Ubah) dan **DELETE** (Hapus).
+5. **Ubah Data Produk / Update (`ui/produk_form.dart`)**:
+   * Formulir dinamis yang otomatis terisi dengan data produk lama saat mode edit aktif.
+   * Menyimpan pembaruan informasi produk kembali ke sistem.
+6. **Hapus / Buang Produk / Delete (`ui/produk_detail.dart`)**:
+   * Mekanisme penghapusan data yang dilengkapi konfirmasi dialog (`AlertDialog`) dengan opsi **Ya** dan **Batal** untuk mencegah data terhapus secara tidak sengaja.
 
 ### Cara Menjalankan:
 ```bash
@@ -207,3 +162,52 @@ cd tokokita
 flutter pub get
 flutter run
 ```
+
+---
+
+## 🔹 Bagian 5: Integrasi REST API, Autentikasi, & Backend CI4
+
+Implementasi integrasi aplikasi mobile Flutter `tokokita` dengan backend RESTful API **CodeIgniter 4** (`toko-api`) dan database **MySQL** `toko_api` menggunakan arsitektur **BLoC**, HTTP client Bearer Token, manajemen sesi `shared_preferences`, penanganan exception kustom, serta dialog notifikasi.
+
+### 🎬 Video Demonstrasi Autentikasi & Integrasi REST API
+https://github.com/user-attachments/assets/ed632c09-803a-4ca7-8a2e-b54898852291
+
+### 1. Frontend Mobile Toko Kita (`tokokita/`):
+* **Helpers (`lib/helpers/`)**:
+  * `UserInfo` (`user_info.dart`): Pengelolaan sesi login via SharedPreferences (`token`, `userID`, `logout`).
+  * `Api` (`api.dart`): Wrapper HTTP client untuk request POST, GET, DELETE dengan otomatis menyertakan header `Authorization: Bearer <token>` dan validasi status code.
+  * `ApiUrl` (`api_url.dart`): Konfigurasi endpoint REST API (`http://10.0.2.2/toko-api/public`).
+  * `AppException` (`app_exception.dart`): Kelas exception kustom (`FetchDataException`, `BadRequestException`, `UnauthorisedException`, `InvalidInputException`).
+* **BLoC (`lib/bloc/`)**:
+  * `RegistrasiBloc`, `LoginBloc`, `LogoutBloc`, dan `ProdukBloc` sebagai pemisah logika bisnis dengan UI.
+* **UI & Dialog (`lib/ui/` & `lib/widget/`)**:
+  * `RegistrasiPage`: Halaman registrasi akun baru dengan validasi form (Nama min 3 karakter, format email regex, password min 6 karakter).
+  * `LoginPage`: Halaman autentikasi login terhubung ke backend API.
+  * `SuccessDialog` & `WarningDialog`: Dialog kustom notifikasi hasil operasi.
+
+### 2. Backend Service REST API (`toko-api/`):
+File dump SQL database disertakan pada [toko_api.sql](file:///C:/Users/Ilham/AndroidStudioProjects/Praktikum-Pemmob2-Dart/toko-api/toko_api.sql).
+
+* **Database `toko_api`**:
+  * Tabel `member` (`id`, `nama`, `email`, `password` via `password_hash`).
+  * Tabel `member_token` (`id`, `member_id`, `auth_key`).
+  * Tabel `produk` (`id`, `kode_produk`, `nama_produk`, `harga`).
+* **Controllers CodeIgniter 4**:
+  * `RestfulController.php`: Base controller format JSON dengan method `responseHasil($code, $status, $data)`.
+  * `RegistrasiController.php`: Endpoint `POST /registrasi`.
+  * `LoginController.php`: Endpoint `POST /login` dengan verifikasi `password_verify` dan token acak `RandomString()`.
+  * `ProdukController.php`: Endpoint CRUD produk lengkap (`GET`, `POST`, `PUT`, `DELETE`).
+
+### Cara Menjalankan Backend & Frontend:
+1. **Jalankan Backend**:
+   Pastikan web server Apache & MySQL (Laragon / XAMPP) sudah berjalan.
+   ```bash
+   mysql -u root -e "CREATE DATABASE IF NOT EXISTS toko_api;"
+   mysql -u root toko_api < toko-api/toko_api.sql
+   ```
+2. **Jalankan Aplikasi Flutter**:
+   ```bash
+   cd tokokita
+   flutter pub get
+   flutter run
+   ```

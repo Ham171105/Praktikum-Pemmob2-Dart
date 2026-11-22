@@ -1,5 +1,5 @@
 # 🛍️ Aplikasi Mobile Toko Kita (`tokokita`)
-> **Praktikum Pemrograman Mobile - Modul 5 (Flutter & REST API Integration)**
+> **Praktikum Pemrograman Mobile - Modul 4 & 5 (CRUD, BLoC Pattern & REST API Integration)**
 
 ---
 
@@ -16,14 +16,18 @@
 
 ## 📖 Deskripsi Proyek
 
-Aplikasi **`tokokita`** merupakan implementasi tugas praktikum Pemrograman Mobile (Modul 5). Aplikasi ini mengintegrasikan frontend mobile berbasis **Flutter** dengan backend web service RESTful API berbasis **CodeIgniter 4**. 
+Aplikasi **`tokokita`** merupakan implementasi tugas praktikum Pemrograman Mobile yang memadukan pengembangan frontend mobile berbasis **Flutter** dengan pengelolaan data katalog produk secara penuh (**CRUD: Create, Read, Update, Delete**) dan integrasi web service RESTful API berbasis **CodeIgniter 4**. 
 
-Arsitektur aplikasi dibangun menggunakan pola **BLoC (Business Logic Component)** untuk memisahkan logika bisnis dari antarmuka pengguna (UI), manajemen sesi login menggunakan **`shared_preferences`**, komunikasi jaringan melalui paket **`http`** dengan header *Bearer Token*, serta penanganan *exception* kustom dan pop-up dialog interaktif.
+Arsitektur aplikasi dibangun menggunakan pola **BLoC (Business Logic Component)** untuk memisahkan logika bisnis dari antarmuka pengguna (UI), manajemen sesi login menggunakan **`shared_preferences`**, komunikasi jaringan melalui paket **`http`** dengan otorisasi *Bearer Token*, serta penanganan *exception* khusus dan pop-up dialog interaktif.
 
 ---
 
 ## 🎬 Video Demonstrasi Aplikasi
 
+### 1. Demonstrasi Operasi CRUD Produk (Tambah, Ubah, Hapus)
+https://github.com/user-attachments/assets/e106de1c-15ff-4771-96f7-742235653cb0
+
+### 2. Demonstrasi Autentikasi & Integrasi REST API (Registrasi, Login, Sesi)
 https://github.com/user-attachments/assets/ed632c09-803a-4ca7-8a2e-b54898852291
 
 ---
@@ -60,57 +64,49 @@ lib/
 
 ---
 
-## ⚙️ Penjelasan Arsitektur & Komponen
+## ⚙️ Penjelasan Fitur & Komponen
 
-### 1. Helpers (`lib/helpers/`)
-| File | Deskripsi & Fungsi Utama |
-| :--- | :--- |
-| **`user_info.dart`** | Mengelola data sesi lokal via `SharedPreferences` (`setToken`, `getToken`, `setUserID`, `getUserID`, `logout`). |
-| **`api.dart`** | Wrapper HTTP client untuk request `POST`, `GET`, dan `DELETE` dengan otomatis menyertakan header otorisasi Bearer Token dan validasi status code. |
-| **`api_url.dart`** | Konstanta endpoint REST API (base URL `http://10.0.2.2/toko-api/public`, endpoint registrasi, login, produk CRUD). |
-| **`app_exception.dart`** | Kelas exception kustom (`FetchDataException`, `BadRequestException`, `UnauthorisedException`, `InvalidInputException`). |
+### 1. Operasi CRUD Produk (Modul 4)
+| Komponen / Fitur | File Terkait | Penjelasan Operasi |
+| :--- | :--- | :--- |
+| **Model Produk** | `lib/model/produk.dart` | Representasi data objek produk (`id`, `kodeProduk`, `namaProduk`, `hargaProduk`) dengan parser JSON. |
+| **List Produk (Read)** | `lib/ui/produk_page.dart` | Menampilkan seluruh katalog produk dalam bentuk list card dengan data realtime. |
+| **Tambah Produk (Create)** | `lib/ui/produk_form.dart` | Formulir input kode produk, nama, dan harga dengan validasi input. |
+| **Detail Produk** | `lib/ui/produk_detail.dart` | Menampilkan informasi lengkap produk yang dipilih serta aksi navigasi edit dan delete. |
+| **Ubah Produk (Update)** | `lib/ui/produk_form.dart` | Mengupdate data produk yang ada dengan auto-fill nilai lama ke formulir. |
+| **Hapus Produk (Delete)** | `lib/ui/produk_detail.dart` | Menghapus produk disertai konfirmasi dialog (`AlertDialog`) peringatan. |
 
-### 2. BLoC - Business Logic Component (`lib/bloc/`)
-| File | Deskripsi & Fungsi Utama |
-| :--- | :--- |
-| **`registrasi_bloc.dart`** | Mengirim data nama, email, password ke endpoint registrasi API. |
-| **`login_bloc.dart`** | Mengirim kredensial login dan mengembalikan objek `Login` beserta auth token. |
-| **`logout_bloc.dart`** | Menghapus token dan data sesi lokal saat user logout. |
-| **`produk_bloc.dart`** | Operasi CRUD produk: `getProduks()`, `addProduk()`, `updateProduk()`, dan `deleteProduk()`. |
+### 2. Integrasi BLoC & REST API (Modul 5)
+| File | Kategori | Deskripsi & Fungsi Utama |
+| :--- | :--- | :--- |
+| **`user_info.dart`** | Helpers | Pengelolaan sesi lokal via `SharedPreferences` (`setToken`, `getToken`, `logout`). |
+| **`api.dart`** | Helpers | Wrapper HTTP client (`POST`, `GET`, `DELETE`) dengan Bearer Token otomatis. |
+| **`api_url.dart`** | Helpers | Konstanta endpoint REST API (`http://10.0.2.2/toko-api/public`). |
+| **`app_exception.dart`** | Helpers | Kelas penanganan error jaringan khusus. |
+| **`registrasi_bloc.dart`** | BLoC | Penghubung form pendaftaran ke endpoint registrasi server. |
+| **`login_bloc.dart`** | BLoC | Penghubung autentikasi login dan pengambilan auth token. |
+| **`logout_bloc.dart`** | BLoC | Penghapus sesi token lokal saat user logout. |
+| **`produk_bloc.dart`** | BLoC | Menangani komunikasi CRUD produk antara UI dan server. |
 
-### 3. Model Data (`lib/model/`)
-| File | Deskripsi & Fungsi Utama |
-| :--- | :--- |
-| **`login.dart`** | Model data respons login (token, userID, userEmail). |
-| **`registrasi.dart`** | Model data respons status pendaftaran akun. |
-| **`produk.dart`** | Model data produk (`id`, `kodeProduk`, `namaProduk`, `hargaProduk`). |
-
-### 4. User Interface & Dialog (`lib/ui/` & `lib/widget/`)
-| File / Halaman | Deskripsi & Fitur |
-| :--- | :--- |
-| **`login_page.dart`** | Form login dengan validasi email/password, integrasi `LoginBloc`, penyimpanan sesi ke `UserInfo`. |
-| **`registrasi_page.dart`** | Form registrasi akun dengan validasi input (Nama min 3 karakter, format email regex, password min 6 karakter). |
-| **`produk_page.dart`** | Menampilkan katalog produk dari server via `FutureBuilder`, drawer navigasi logout, dan tombol tambah produk. |
-| **`produk_detail.dart`** | Rincian detail produk terpilih dengan tombol aksi **EDIT** dan **DELETE** (didukung konfirmasi dialog). |
-| **`produk_form.dart`** | Form dinamis untuk menambah produk baru atau mengubah (*update*) produk yang sudah ada. |
-| **`success_dialog.dart`** | Pop-up dialog hijau kustom saat operasi berhasil. |
-| **`warning_dialog.dart`** | Pop-up dialog merah kustom saat operasi gagal / terjadi error. |
-
-### 5. Alur Autentikasi Aplikasi (`lib/main.dart`)
-* Saat aplikasi dibuka, fungsi `isLogin()` memeriksa token tersimpan di local storage secara asinkron.
-* Jika token ditemukan, user langsung diarahkan ke **`ProdukPage()`** tanpa perlu login ulang.
-* Jika belum terdapat token, user akan diarahkan ke **`LoginPage()`**.
+### 3. Autentikasi & Dialog Pengguna
+| Komponen | File | Deskripsi |
+| :--- | :--- | :--- |
+| **Registrasi** | `lib/ui/registrasi_page.dart` | Validasi nama min 3 huruf, format regex email, dan panjang password min 6 karakter. |
+| **Login** | `lib/ui/login_page.dart` | Validasi kredensial pengguna dan penyimpanan token ke sesi lokal. |
+| **Success Dialog** | `lib/widget/success_dialog.dart` | Notifikasi pop-up hijau kustom saat operasi berhasil. |
+| **Warning Dialog** | `lib/widget/warning_dialog.dart` | Notifikasi pop-up merah kustom saat operasi gagal / terjadi error. |
+| **Auto Session** | `lib/main.dart` | Pengecekan status login otomatis; langsung ke `ProdukPage` jika sudah login. |
 
 ---
 
 ## 🚀 Panduan Menjalankan Aplikasi
 
 ### 1. Prasyarat
-* Backend server `toko-api` sudah berjalan (via Laragon / XAMPP / `php spark serve`).
-* Database `toko_api` sudah diimpor di MySQL.
+* Backend web service `toko-api` sudah aktif di server lokal (Laragon / XAMPP).
+* Database `toko_api` sudah diimpor pada MySQL.
 
-### 2. Menjalankan Flutter
-Buka terminal dan masuk ke folder `tokokita`:
+### 2. Menjalankan Aplikasi
+Buka terminal pada direktori proyek:
 ```bash
 cd tokokita
 flutter pub get
